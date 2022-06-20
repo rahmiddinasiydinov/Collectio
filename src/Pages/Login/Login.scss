@@ -1,0 +1,27 @@
+.login{
+    &__wrapper{
+        display: flex;
+    }
+    &__context{
+        width: 40%;
+    }
+    &__img{
+        width: 60%;
+        height: 100vh;
+        background-color: #BDF2D5;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-image: url('../../Assets/Images/back1.jpg');
+        position: relative;
+        &--overflow{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left:0;
+            background-color: rgba($color: #000000, $alpha:0.4);
+
+        }
+    }
+}
