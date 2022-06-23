@@ -1,10 +1,12 @@
-
-
+import './Personal.scss';
+import {Typography, Container} from '@mui/material'
 
 export const Personal = () => {
     return (
-        <>
-            <h1>Personal</h1>
-        </>
-    )
+      <div className="personal">
+        <Container maxWidth='xl'>
+          <Typography >Profile</Typography>
+        </Container>
+      </div>
+    );
 }

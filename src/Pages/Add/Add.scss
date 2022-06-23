@@ -1,0 +1,24 @@
+.add {
+    &__active {
+        padding: 2px;
+        border-bottom: 2px solid #f44336 !important;
+        color: #f44336 !important;
+    }
+    &__menu {
+        padding: 2px;
+        border-bottom: 2px solid transparent;
+    }
+    &__uploaded {
+        background-color: green !important;
+    }
+    &__input {
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 860px) {
+    .add {
+        &__right {
+            margin-top: 30px;
+        }
+    }
+}

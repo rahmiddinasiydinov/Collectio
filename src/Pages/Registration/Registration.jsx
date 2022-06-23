@@ -12,6 +12,7 @@ import back8 from "../../Assets/Images/back8.webp";
 import back9 from "../../Assets/Images/back9.jpg";
 import back10 from "../../Assets/Images/back10.jpg";
 import { languageStore } from "../../Utils/Language";
+import {useNavigate} from 'react-router-dom'
 import {
   Typography,
   Container,
@@ -42,6 +43,7 @@ const random = Math.floor(Math.random() * 10);
 export const Registration = () => {
   const[message, setMessage] = useState('');
   const [status, setStatus] = useState(0);
+  const navigate = useNavigate();
   const currentLanguage =
     JSON.parse(window.localStorage.getItem("language")) || "uz";
   const [lang, setLang] = useState(currentLanguage);
@@ -60,6 +62,11 @@ export const Registration = () => {
       console.log(res.data);
       setStatus(res.data?.status);
       setMessage(res.data?.message);
+             if (res.data?.status === 200) {
+               setTimeout(() => {
+                 navigate("/home");
+               }, 1000);
+             }
     });
   };
 

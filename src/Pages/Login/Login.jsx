@@ -11,10 +11,11 @@ import back7 from "../../Assets/Images/back7.jpg";
 import back8 from "../../Assets/Images/back8.webp";
 import back9 from "../../Assets/Images/back9.jpg";
 import back10 from "../../Assets/Images/back10.jpg";
-import { Typography, Container,  TextField, FormControl, Button, Select, MenuItem, InputLabel, FormHelperText} from "@mui/material";
+import { Typography, Container,  TextField, FormControl, Button, Select, MenuItem, InputLabel} from "@mui/material";
 import { Box} from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { languageStore } from "../../Utils/Language";
+
 const arrImg = [
   back1,
   back2,
@@ -36,6 +37,7 @@ export const Login = () => {
   const [lang, setLang] = useState(currentLanguage);
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState(0);
+  const navigate = useNavigate()
   const handleChange = e => {
     setLang(e.target.value);
   }
@@ -54,7 +56,12 @@ export const Login = () => {
       .then((res) => {
         console.log(res.data);
         setStatus(res.data?.status);
-        setMessage(res.data?.message)
+        setMessage(res.data?.message);
+        if (res.data?.status === 200) {
+          setTimeout(() => {
+            navigate("/home");
+          }, 1000)
+        }
       });
   };
   return (

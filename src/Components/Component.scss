@@ -1,0 +1,51 @@
+
+.header{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color:transparent;
+    border: none;
+    padding: 30px 0;
+    transition: .3s ease-in-out;
+    z-index: 100;
+    &__scroll{
+        padding: 0;
+        background-color: #f3e5f5;
+        -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+        -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+        box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    }
+    &__logo{
+        background: #8c00ff; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #8c00ff, #ff0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #8c00ff, #ff0000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 40px;
+        font-weight: 700;
+        font-family: 'Dancing Script', cursive;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__img{
+        width: 50px;
+        height: 50px;
+        &--icon{
+            color: inherit;
+            font-size: 40px;
+        }    
+        &--wrapper{
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            width: 60px;
+            border-width: 2px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+    }
+}
