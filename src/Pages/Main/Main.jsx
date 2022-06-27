@@ -5,6 +5,7 @@ import axios from "axios";
 import {useDispatch} from 'react-redux'
 import { userActions } from "../../Redux/userSlice";
 import { useEffect } from "react";
+import { MobileMenu } from "../../Components/MobileMenu";
 export const Main = () => {
   const dispatch = useDispatch(); 
   useEffect(() => {
@@ -15,6 +16,7 @@ export const Main = () => {
   return (
     <main className="main">
       <Header />
+      <MobileMenu/>
       <Outlet />
     </main>
   );

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const CardCollection = ({img, name, id,desc}) => {
     return (
-      <Card sx={{ maxWidth: 345, marginLeft:'20px', marginTop:'20px' }}>
+      <Card sx={{ width:'300px',  maxWidth: '100%', marginLeft:'20px', marginTop:'20px'  }}>
         <CardMedia
           component="img"
           alt="green iguana"

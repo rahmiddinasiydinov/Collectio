@@ -3,10 +3,14 @@ import { green, grey, purple, red } from "@mui/material/colors";
 export const theme = createTheme({
   palette: {
     mode: "light",
+    background: {
+      default: "#FCF8E8",
+      paper:'#f3e5f5'
+    },
     primary: {
-      main: purple[800],
-      light: purple[400],
-      dark: purple[900],
+      main: '#000',
+      light: '#222',
+      dark: '#000',
     },
     success: {
       main: green[500],
@@ -27,11 +31,14 @@ export const theme = createTheme({
 });
 export const themeDark = createTheme({
   palette: {
+    background: {
+      default: "#161616",
+    },
     mode: "dark",
     primary: {
-      main: purple[100],
-      light: purple[200],
-      dark: purple[50],
+      main: '#EEE',
+      light: '#FFF',
+      dark: '#AAA',
     },
     success: {
       main: green[500],

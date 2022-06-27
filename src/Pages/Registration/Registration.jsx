@@ -45,14 +45,14 @@ export const Registration = () => {
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
   const currentLanguage =
-    JSON.parse(window.localStorage.getItem("language")) || "uz";
+    window.localStorage.getItem("language") || "uz";
   const [lang, setLang] = useState(currentLanguage);
   const handleChange = (e) => {
     setLang(e.target.value);
   };
 
   useEffect(() => {
-    window.localStorage.setItem("language", JSON.stringify(lang));
+    window.localStorage.setItem("language", lang);
   }, [lang]);
 
   const handleSubmit = (e) => {

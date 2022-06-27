@@ -109,7 +109,7 @@ export const AddCollection = () => {
                 variant="outlined"
                 color="primary"
                 required
-                sx={{ width: "100%", marginTop:'20px' }}
+                sx={{ width: "100%", marginTop: "20px" }}
               />
               <Button
                 variant="contained"
@@ -176,11 +176,25 @@ export const AddCollection = () => {
           {" "}
           My Collections
         </Typography>
-        <List component={"ul"} sx={{ display: "flex", marginTop:'20px' }}>
+        <List
+          component={"ul"}
+          sx={{
+            display: "flex",
+            marginTop: "20px",
+            flexWrap: "wrap",
+            justifyContent: window.innerWidth > 500 ? `flex-start` : "center",
+          }}
+        >
           {collections?.length > 0 ? (
             collections.map((e, i) => {
               return (
-                  <CardCollection key={i} desc={e?.desc} img={e?.img} name={e?.name} id={ e?._id} />
+                <CardCollection
+                  key={i}
+                  desc={e?.desc}
+                  img={e?.img}
+                  name={e?.name}
+                  id={e?._id}
+                />
               );
             })
           ) : (

@@ -20,7 +20,6 @@ export const AddItem = () => {
   const [items, setItems] = useState(null);
   const [tags, setTags] = useState(null);
   const [collections, setCollections] = useState(null);
-
   const config = {
     headers: {
       "content-type": "multipart/form-data",
@@ -66,6 +65,7 @@ export const AddItem = () => {
   const handleChange = (e) => {
     setFile(e.target.files[0]);
   };
+  
   return (
     <>
       <Box width={"100%"} marginTop="20px">
@@ -230,7 +230,15 @@ export const AddItem = () => {
           {" "}
           My Items
         </Typography>
-        <List component={"ul"} sx={{ display: "flex", marginTop: "20px" }}>
+        <List
+          component={"ul"}
+          sx={{
+            display: "flex",
+            marginTop: "20px",
+            flexWrap: "wrap",
+            justifyContent: window.innerWidth> 500 ? `flex-start` : "center",
+          }}
+        >
           {items?.length > 0 ? (
             items.map((e, i) => {
               return (

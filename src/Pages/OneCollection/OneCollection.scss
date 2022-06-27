@@ -1,0 +1,16 @@
+@media screen and (max-width:700px) {
+    .oneCollection{
+        &__wrapper{
+            flex-direction: column !important;
+        }
+        &__left,&__right{
+            width: 100% !important;
+            max-width: 100%;
+            padding: 0 !important;
+        }
+        &__list{
+            height: unset;
+            overflow: unset;
+        }
+    }    
+}

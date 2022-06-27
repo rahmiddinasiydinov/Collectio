@@ -33,7 +33,7 @@ const random = Math.floor(Math.random() * 10);
 
 
 export const Login = () => {
-  const currentLanguage = JSON.parse(window.localStorage.getItem('language')) || 'uz';
+  const currentLanguage = (window.localStorage.getItem('language')) || 'uz';
   const [lang, setLang] = useState(currentLanguage);
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState(0);
@@ -42,7 +42,7 @@ export const Login = () => {
     setLang(e.target.value);
   }
   useEffect(() => {
-    window.localStorage.setItem('language', JSON.stringify(lang));
+    window.localStorage.setItem('language', lang);
   }, [lang]);
 
   const handleSubmit = (e) => {
