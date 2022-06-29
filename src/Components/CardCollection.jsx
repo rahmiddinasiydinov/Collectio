@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent,Typography, Button, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const CardCollection = ({img, name, id,desc}) => {
+export const CardCollection = ({img, name, id,desc, type}) => {
     return (
       <Card sx={{ width:'300px',  maxWidth: '100%', marginLeft:'20px', marginTop:'20px'  }}>
         <CardMedia
@@ -21,7 +21,7 @@ export const CardCollection = ({img, name, id,desc}) => {
         <CardActions>
           <Button size="small">
             {" "}
-            <Link to={`/home/collection/${id}`}>Learn more</Link>
+            <Link to={type==='item'?`/home/item/${id}`: `/home/collection/${id}`}>Learn more</Link>
           </Button>
         </CardActions>
       </Card>

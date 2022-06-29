@@ -248,6 +248,7 @@ export const AddItem = () => {
                   img={e?.img}
                   name={e?.title}
                   id={e?._id}
+                  type ='item'
                 />
               );
             })

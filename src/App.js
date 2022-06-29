@@ -16,27 +16,33 @@ import { theme } from "./Utils/MuiTheme";
 import { themeDark } from "./Utils/MuiTheme";
 import { themeActions } from "./Redux/theme";
 import { useSelector } from "react-redux";
+import { OneItem } from "./Pages/OneItem/OneItem";
+import { SocketProvider } from "./Contexts/SocketIo";
 function App() {
   axios.defaults.withCredentials = true;
   const themeType = useSelector(state => state.theme.currentTheme);
   console.log(themeType);
   return (
-      <ThemeProvider theme={themeType==='light'? theme:themeDark}>
-    <div className="App">
-      <CssBaseline />
-      <Routes>
-        <Route path="home" element={<Main />}>
-          <Route index element={<Home />} />
-          <Route path="collection/:id" element={<OneCollection />} />
-          <Route path="collection" element={<Collections />} />
-          <Route path="add" element={<Add />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-        <Route path="login" element={<Login />} />
-        <Route path="registration" element={<Registration />} />
-      </Routes>
-      </div>
-      </ThemeProvider>
+    <ThemeProvider theme={themeType === "light" ? theme : themeDark}>
+      <SocketProvider>
+        {" "}
+        <div className="App">
+          <CssBaseline />
+          <Routes>
+            <Route path="home" element={<Main />}>
+              <Route index element={<Home />} />
+              <Route path="collection/:id" element={<OneCollection />} />
+              <Route path="item/:id" element={<OneItem />} />
+              <Route path="collection" element={<Collections />} />
+              <Route path="add" element={<Add />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="registration" element={<Registration />} />
+          </Routes>
+        </div>
+      </SocketProvider>
+    </ThemeProvider>
   );
 }
 

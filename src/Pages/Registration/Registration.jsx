@@ -85,8 +85,20 @@ export const Registration = () => {
             flexDirection: "column",
             alignItems: "center",
             height: "100%",
+            position: 'relative',
+            paddingBottom:'30px'
+      
           }}
         >
+          <Button
+            color="primary"
+            sx={{ position: "absolute", left: "50px", top: "30px" }}
+            variant="outlined"
+          >
+            <Link to="/home">
+              <Typography variant="h6">Home</Typography>
+            </Link>{" "}
+          </Button>
           <FormControl
             sx={{ position: "absolute", right: "50px", top: "30px" }}
           >
@@ -192,7 +204,8 @@ export const Registration = () => {
                 {" "}
                 <Typography
                   component={"span"}
-                  sx={{ fontSize: "20px", fontWeight: "700", color: "#4a148c" }}
+                  sx={{ fontSize: "20px", fontWeight: "700"}}
+                  color='primary.light'
                 >
                   {languageStore[lang]?.auth.login}
                 </Typography>

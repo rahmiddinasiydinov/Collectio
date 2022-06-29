@@ -11,8 +11,17 @@ import back7 from "../../Assets/Images/back7.jpg";
 import back8 from "../../Assets/Images/back8.webp";
 import back9 from "../../Assets/Images/back9.jpg";
 import back10 from "../../Assets/Images/back10.jpg";
-import { Typography, Container,  TextField, FormControl, Button, Select, MenuItem, InputLabel} from "@mui/material";
-import { Box} from "@mui/system";
+import {
+  Typography,
+  Container,
+  TextField,
+  FormControl,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
+import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import { languageStore } from "../../Utils/Language";
 
@@ -30,19 +39,17 @@ const arrImg = [
 ];
 const random = Math.floor(Math.random() * 10);
 
-
-
 export const Login = () => {
-  const currentLanguage = (window.localStorage.getItem('language')) || 'uz';
+  const currentLanguage = window.localStorage.getItem("language") || "uz";
   const [lang, setLang] = useState(currentLanguage);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [status, setStatus] = useState(0);
-  const navigate = useNavigate()
-  const handleChange = e => {
+  const navigate = useNavigate();
+  const handleChange = (e) => {
     setLang(e.target.value);
-  }
+  };
   useEffect(() => {
-    window.localStorage.setItem('language', lang);
+    window.localStorage.setItem("language", lang);
   }, [lang]);
 
   const handleSubmit = (e) => {
@@ -60,7 +67,7 @@ export const Login = () => {
         if (res.data?.status === 200) {
           setTimeout(() => {
             navigate("/home");
-          }, 1000)
+          }, 1000);
         }
       });
   };
@@ -79,8 +86,18 @@ export const Login = () => {
             flexDirection: "column",
             alignItems: "center",
             height: "100%",
+            position: "relative",
           }}
         >
+          <Button
+            color="primary"
+            sx={{ position: "absolute", left: "50px", top: "30px" }}
+            variant="outlined"
+          >
+            <Link to="/home">
+              <Typography variant="h6">Home</Typography>
+            </Link>{" "}
+          </Button>
           <FormControl
             sx={{ position: "absolute", right: "50px", top: "30px" }}
           >
@@ -169,7 +186,8 @@ export const Login = () => {
                 {" "}
                 <Typography
                   component={"span"}
-                  sx={{ fontSize: "20px", fontWeight: "700", color: "#4a148c" }}
+                  sx={{ fontSize: "20px", fontWeight: "700" }}
+                  color="primary.light"
                 >
                   {languageStore[lang]?.auth.register}
                 </Typography>

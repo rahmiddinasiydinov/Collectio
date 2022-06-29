@@ -1,5 +1,5 @@
 import "./OneCollection.scss";
-import { Typography, Container, Box, List, ListItem } from "@mui/material";
+import { Typography, Container, Box, List, ListItem, Avatar } from "@mui/material";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,6 +7,7 @@ import dateFormat from "dateformat";
 import { ItemCard } from "../../Components/ItemCard";
 import { Link } from "react-router-dom";
 import { width } from "@mui/system";
+import { deepPurple } from "@mui/material/colors";
 export const OneCollection = () => {
   const [collection, setCollection] = useState({});
   const { id } = useParams();
@@ -21,7 +22,7 @@ export const OneCollection = () => {
       <Container
         className="oneCollection__wrapper"
         maxWidth="xl"
-        sx={{ display: "flex", flexWrap: "wrap" }}
+        sx={{ display: "flex", flexWrap: "wrap", marginBottom:'30px' }}
       >
         <Box
           className="oneCollection__left"
@@ -30,6 +31,12 @@ export const OneCollection = () => {
           padding={"10px"}
           marginTop="30px"
         >
+          <Typography variant="h6" color={"primary.dark"} marginBottom='20px' component={"span"} display='flex' alignItems={'center'}>
+            <Avatar sx={{marginRight:'10px'}} src={collection?.user?.img}>
+              {collection?.user?.fullName?.slice(0, 1)}
+            </Avatar>{" "}
+            {collection?.user?.fullName}
+          </Typography>
           <img
             width={"100%"}
             style={{ borderRadius: "10px" }}
@@ -48,9 +55,7 @@ export const OneCollection = () => {
               {dateFormat(collection?.createdAt, "mmmm d, yyyy, h:MM TT")}
             </Typography>
           </Typography>
-          <Typography variant="h6" color={"primary.dark"} component={"span"}>
-            {collection?.user?.fullName}
-          </Typography>
+
           <Typography variant="h6" marginTop={"20px"}>
             {collection?.desc}
           </Typography>
@@ -78,14 +83,14 @@ export const OneCollection = () => {
               flexGrow: "1",
               overflow: "auto",
               height: "550px",
-              width:'100%',
+              width: "100%",
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
               border: "1px solid rgba",
             }}
           >
-            {collection?.items ? (
+            {collection?.items?.length>0 ? (
               collection?.items?.map((e) => {
                 return (
                   <ListItem
@@ -93,12 +98,11 @@ export const OneCollection = () => {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      padding: '0', 
-                     
+                      padding: "0",
+                      marginBottom:'20px'
                     }}
                   >
-                    <ItemCard img={e?.img} title={e?.title} id={ e?._id} />
-                    
+                    <ItemCard img={e?.img} title={e?.title} id={e?._id}/>
                   </ListItem>
                 );
               })

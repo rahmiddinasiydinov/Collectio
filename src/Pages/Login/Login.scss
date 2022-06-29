@@ -25,3 +25,13 @@
         }
     }
 }
+ @media screen and (max-width:900px) {
+    .login{
+        &__img{
+            display: none;
+        }
+        &__context{
+            width: 100%;
+        }
+    }
+ }

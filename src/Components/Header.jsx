@@ -93,9 +93,9 @@ export const Header = () => {
           ) : (
             ""
           )}
-          <Avatar  className="header__avatar" sx={{ bgcolor: deepOrange[500] }} src={user?.img}>
+          {user&&<Avatar  className="header__avatar" sx={{ bgcolor: deepOrange[500] }} src={user?.img}>
             {user?.fullName.slice(0, 1) || user?.username.slice(0, 1)}
-          </Avatar>
+          </Avatar>}
           <ListItem className="header__item">
             {" "}
             {user ? (

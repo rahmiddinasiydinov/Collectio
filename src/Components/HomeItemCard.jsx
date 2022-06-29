@@ -27,7 +27,7 @@ const ExpandMore = styled((props) => {
 export default function HomeItemCard({ username, img, date, avatar, desc, topic, id, title, collection }) {
   return (
     <Card sx={{ width: "400px", maxWidth: "100%", borderRadius: "10px" }}>
-      <Paper sx={{ padding: "10px" }}>
+      <Paper sx={{ padding: "10px", position:'relative' }}>
         <Box
           className="card__topic"
           sx={{

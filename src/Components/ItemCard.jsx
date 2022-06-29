@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const ItemCard = ({ img, title, id }) => {
+export const ItemCard = ({ img, title, id}) => {
   return (
     <Link
       to={`/home/item/${id}`}

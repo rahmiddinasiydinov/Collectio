@@ -1,3 +1,18 @@
+.oneItem{
+    &__comment{
+        &--hide{
+            height: 0 !important;
+            overflow: hidden !important;
+            // opacity: 0 !important;
+            transition: 0s !important;
+        }
+    }
+}
+
+
+
+
+
 @media screen and (max-width:700px) {
     .oneCollection{
         &__wrapper{
@@ -9,8 +24,8 @@
             padding: 0 !important;
         }
         &__list{
-            height: unset !important;
-            overflow: unset !important;
+            height: unset;
+            overflow: unset;
         }
     }    
 }
