@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const ItemCard = ({ img, title, id}) => {
   return (
     <Link
-      to={`/home/item/${id}`}
+      to={`/item/${id}`}
       style={{
         position: "relative",
         width: "400px",

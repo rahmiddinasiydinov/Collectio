@@ -6,10 +6,14 @@ import { languageActions } from "../../Redux/languageSlice";
 import { userActions } from "../../Redux/userSlice";
 import "./Settings.scss";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 export const Settings = () => {
   const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light');
-  const [language, setLanguage] = useState(window.localStorage.getItem('language') || 'uz');
+  const [language, setLanguage] = useState(
+    JSON.parse(window.localStorage.getItem("language")) || "uz"
+  );
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const handleTheme = (e) => {
     console.log(e.target.value);
     window.localStorage.setItem('theme', e.target.value);
@@ -17,20 +21,20 @@ export const Settings = () => {
     setTheme(e.target.value)
   }
   const handleLanguage = (e) => {
-    console.log(e.target.value);
-    window.localStorage.setItem('language',e.target.value);
-    dispatch(languageActions.setLanguage(e.target.value));
+    i18n.changeLanguage(e.target.value)
+    window.localStorage.setItem('language',JSON.stringify(e.target.value));
     setLanguage(e.target.value);
   }
   const handleLogout = () => {
     axios.get("http://localhost:7007/logout").then(res => console.log(res));
     dispatch(userActions.setUser(null));
+    window.localStorage.removeItem('user');
   }
   return (
     <>
       <Container maxWidth="xl">
         <Typography color={"primary"} variant="h4">
-          Settings
+          {t("Settings")}
         </Typography>
         <Box
           width={"100%"}
@@ -39,7 +43,7 @@ export const Settings = () => {
         >
           <Box sx={{width:'500px', maxWidth:'100%', marginTop:'20px' , marginRight:'10px'}}>
             <Typography variant="h5" color={"primary.light"}>
-              App settings
+              {t("AppSettings")}
             </Typography>
             <Box display={"flex"} alignItems="center" marginTop={"30px"}>
               <Typography
@@ -48,7 +52,7 @@ export const Settings = () => {
                 marginRight={"10px"}
                 component={"label"}
               >
-                Language:
+                {t("Language")}:
               </Typography>
               <FormControl className="settings__select">
                 <InputLabel id="demo-simple-select-label"></InputLabel>
@@ -75,7 +79,7 @@ export const Settings = () => {
                 marginRight={"10px"}
                 component={"label"}
               >
-                Theme:
+                {t("Theme")}:
               </Typography>
               <FormControl className="settings__select">
                 <InputLabel id="demo-simple-select-label"></InputLabel>
@@ -90,22 +94,22 @@ export const Settings = () => {
                   variant="standard"
                   sx={{}}
                 >
-                  <MenuItem value={"light"}>Light</MenuItem>
-                  <MenuItem value={"dark"}>Dark</MenuItem>
+                  <MenuItem value={"light"}>{ t("Light")}</MenuItem>
+                  <MenuItem value={"dark"}>{ t("Dark")}</MenuItem>
                 </Select>
               </FormControl>
             </Box>
           </Box>
           <Box sx={{width:'500px', maxWidth:'100%', marginTop:'20px' }}>
             <Typography variant="h5" color={"primary.light"}>
-              Profile settings
+              {t("ProfileSettings")}
             </Typography>
             <Box marginTop={'30px'}>
               <Button variant="contained" size="medium" color="error"  sx={{marginRight:'20px'}}>
-                Delete Account
+                {t("DeleteAccount")}
               </Button>
               <Button onClick={handleLogout} variant="contained" size="medium" color="warning">
-                Log out
+                {t("Logout")}
               </Button>
             </Box>
           </Box>

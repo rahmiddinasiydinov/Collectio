@@ -56,7 +56,7 @@ export default function HomeCard({username, img, avatar, date, desc, title, topi
               )}
             </Avatar>
           }
-          title={username}
+          title={username || "Deleted Account"}
           subheader={
             date ? dateFormat(date, " mmmm d, yyyy") : "Date is not visible"
           }

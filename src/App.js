@@ -18,6 +18,7 @@ import { themeActions } from "./Redux/theme";
 import { useSelector } from "react-redux";
 import { OneItem } from "./Pages/OneItem/OneItem";
 import { SocketProvider } from "./Contexts/SocketIo";
+import Admin from "./Pages/Admin/Admin";
 function App() {
   axios.defaults.withCredentials = true;
   const themeType = useSelector(state => state.theme.currentTheme);
@@ -29,13 +30,14 @@ function App() {
         <div className="App">
           <CssBaseline />
           <Routes>
-            <Route path="home" element={<Main />}>
+            <Route path="/" element={<Main />}>
               <Route index element={<Home />} />
               <Route path="collection/:id" element={<OneCollection />} />
               <Route path="item/:id" element={<OneItem />} />
               <Route path="collection" element={<Collections />} />
               <Route path="add" element={<Add />} />
               <Route path="settings" element={<Settings />} />
+              <Route path='admin' element={<Admin/> } />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="registration" element={<Registration />} />

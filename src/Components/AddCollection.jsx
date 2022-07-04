@@ -13,8 +13,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
-
+import { useTranslation } from "react-i18next";
 export const AddCollection = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.user.user);
   const [file, setFile] = useState("");
   const [collections, setCollections] = useState(null);
@@ -59,7 +60,7 @@ export const AddCollection = () => {
           marginBottom={"20px"}
           color="primary"
         >
-          Create new Collection
+          {t("CreateCollection")}
         </Typography>
         <FormControl
           component={"form"}
@@ -88,7 +89,7 @@ export const AddCollection = () => {
               <TextField
                 className="add__input"
                 id="standard-text-input"
-                label="Title for Collection"
+                label={t("TitleForCollection")}
                 InputProps={{ minLength: "2" }}
                 type="text"
                 autoComplete="current-password"
@@ -101,7 +102,7 @@ export const AddCollection = () => {
               <TextField
                 className="add__input"
                 id="standard-text-input"
-                label="Topic e.g books"
+                label={t("Topic")}
                 InputProps={{ minLength: "2" }}
                 type="text"
                 name="topic"
@@ -124,8 +125,8 @@ export const AddCollection = () => {
                 color="secondary"
               >
                 {file?.name?.length > 3
-                  ? "Uploaded successfully"
-                  : "Upload only one image *"}
+                  ? t("Uploadedsuccessfully")
+                  : t("OneImage")}
                 <input
                   type="file"
                   name="img"
@@ -145,7 +146,7 @@ export const AddCollection = () => {
               <TextField
                 id="outlined-multiline-flexible"
                 required
-                label="Description"
+                label={t("Description")}
                 multiline
                 rows={4}
                 sx={{ width: "100%", maxWidth: "100%" }}
@@ -162,7 +163,7 @@ export const AddCollection = () => {
                 color="primary"
                 variant="contained"
               >
-                Submit
+                {t("Create")}
               </Button>
             </Box>
           </Box>
@@ -174,7 +175,7 @@ export const AddCollection = () => {
           marginTop={"50px"}
         >
           {" "}
-          My Collections
+          {t("MyCollections")}
         </Typography>
         <List
           component={"ul"}
@@ -199,7 +200,7 @@ export const AddCollection = () => {
             })
           ) : (
             <Typography color={"secondary"} variant="h5">
-              You do not have any collection yet
+              {t("YouDoNotHaveCollection")}
             </Typography>
           )}
         </List>

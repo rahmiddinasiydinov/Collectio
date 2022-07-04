@@ -8,6 +8,8 @@ import { store } from "./Redux";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./Utils/MuiTheme";
 import { themeDark } from "./Utils/MuiTheme";
+import { Suspense } from "react";
+import './Utils/i18n'
 const themeType = window.localStorage.getItem("theme") || "light";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,10 +17,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Suspense fallback='Loading...'>
           <App />
-        </BrowserRouter>
- 
+        </Suspense>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

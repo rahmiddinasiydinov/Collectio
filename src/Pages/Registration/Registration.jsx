@@ -11,8 +11,7 @@ import back7 from "../../Assets/Images/back7.jpg";
 import back8 from "../../Assets/Images/back8.webp";
 import back9 from "../../Assets/Images/back9.jpg";
 import back10 from "../../Assets/Images/back10.jpg";
-import { languageStore } from "../../Utils/Language";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   Container,
@@ -26,6 +25,9 @@ import {
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { userActions } from "../../Redux/userSlice";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 const arrImg = [
   back1,
   back2,
@@ -41,33 +43,44 @@ const arrImg = [
 const random = Math.floor(Math.random() * 10);
 
 export const Registration = () => {
-  const[message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
-  const currentLanguage =
-    window.localStorage.getItem("language") || "uz";
+  const currentLanguage = JSON.parse(window.localStorage.getItem("language")) || "uz";
   const [lang, setLang] = useState(currentLanguage);
+  const {t, i18n} = useTranslation()
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setLang(e.target.value);
+    i18n.changeLanguage(e.target.value)
+    window.localStorage.setItem("language", JSON.stringify(e.target.value));
   };
-
-  useEffect(() => {
-    window.localStorage.setItem("language", lang);
-  }, [lang]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { fullName, username, password, email } = e.target.elements;
-    axios.post("http://localhost:7007/register", { fullName: fullName.value, username: username.value, email: email.value, password: password.value }).then(res => {
-      console.log(res.data);
-      setStatus(res.data?.status);
-      setMessage(res.data?.message);
-             if (res.data?.status === 200) {
-               setTimeout(() => {
-                 navigate("/home");
-               }, 1000);
-             }
-    });
+    axios
+      .post("http://localhost:7007/register", {
+        fullName: fullName.value,
+        username: username.value,
+        email: email.value,
+        password: password.value,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStatus(res.data?.status);
+        setMessage(res.data?.message);
+      if (res.data?.status === 200) {
+        dispatch(userActions.setUser(res?.data.data));
+        window.localStorage.setItem("user", JSON.stringify(res.data?.data));
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        dispatch(userActions.setUser(null));
+        window.localStorage.setItem("user", JSON.stringify(null));
+      }
+      });
   };
 
   return (
@@ -85,9 +98,8 @@ export const Registration = () => {
             flexDirection: "column",
             alignItems: "center",
             height: "100%",
-            position: 'relative',
-            paddingBottom:'30px'
-      
+            position: "relative",
+            paddingBottom: "30px",
           }}
         >
           <Button
@@ -95,21 +107,21 @@ export const Registration = () => {
             sx={{ position: "absolute", left: "50px", top: "30px" }}
             variant="outlined"
           >
-            <Link to="/home">
-              <Typography variant="h6">Home</Typography>
+            <Link to="/">
+              <Typography variant="h6">{ t("Home")}</Typography>
             </Link>{" "}
           </Button>
           <FormControl
             sx={{ position: "absolute", right: "50px", top: "30px" }}
           >
             <InputLabel id="demo-simple-select-label">
-              {languageStore[lang]?.language}
+              { t("Language")}
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={lang}
-              label={`${languageStore[lang]?.auth.username}`}
+              label={`${t("Username")}`}
               onChange={handleChange}
             >
               <MenuItem value={"uz"}>Uz</MenuItem>
@@ -124,7 +136,7 @@ export const Registration = () => {
               paddingTop: "200px",
             }}
           >
-            {languageStore[lang]?.auth.register}
+            {t("Register")}
           </Typography>
 
           <FormControl
@@ -142,7 +154,7 @@ export const Registration = () => {
             <TextField
               id="fullname"
               name="fullName"
-              label={`${languageStore[lang]?.auth.fullName}`}
+              label={`${t("FullName")}`}
               sx={{
                 width: "100%",
                 marginBottom: "20px",
@@ -161,7 +173,7 @@ export const Registration = () => {
               required
               id="username"
               name="username"
-              label={`${languageStore[lang]?.auth.username}`}
+              label={`${t("Username")}`}
               inputProps={{ minLength: 2 }}
               sx={{
                 width: "100%",
@@ -172,7 +184,7 @@ export const Registration = () => {
               required
               name="password"
               id="password"
-              label={`${languageStore[lang]?.auth.password}`}
+              label={`${t("Username")}`}
               inputProps={{ minLength: 4 }}
               sx={{
                 width: "100%",
@@ -190,7 +202,7 @@ export const Registration = () => {
               variant="contained"
               sx={{ marginTop: "30px", fontSize: "18px" }}
             >
-              {languageStore[lang]?.auth.submit}
+              {t("Submit")}
             </Button>
             <Box component={"div"} sx={{ marginTop: "20px" }}>
               <Typography
@@ -198,16 +210,16 @@ export const Registration = () => {
                 component={"span"}
                 sx={{ marginRight: "10px" }}
               >
-                {languageStore[lang]?.auth.haveAccount}
+                {t("DoYouHaveAccount")}
               </Typography>
               <Link to="/login">
                 {" "}
                 <Typography
                   component={"span"}
-                  sx={{ fontSize: "20px", fontWeight: "700"}}
-                  color='primary.light'
+                  sx={{ fontSize: "20px", fontWeight: "700" }}
+                  color="primary.light"
                 >
-                  {languageStore[lang]?.auth.login}
+                  {t("Login")}
                 </Typography>
               </Link>
             </Box>

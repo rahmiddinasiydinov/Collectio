@@ -126,12 +126,14 @@ export const OneItem = () => {
               component={"span"}
               display="flex"
               alignItems={"center"}
-              marginRight='15px'
+              marginRight="15px"
             >
               <Avatar sx={{ marginRight: "10px" }} src={item?.user?.img}>
                 {item?.user?.fullName?.slice(0, 1)}
               </Avatar>{" "}
-              {item?.user?.fullName}
+              {item?.user?.fullName ||
+                item?.user?.username ||
+                "Deleted account"}
             </Typography>
             <Typography variant="h6">
               <strong>Collection</strong>: {item?.collectionName?.name}
@@ -223,12 +225,13 @@ export const OneItem = () => {
             >
               <TextField
                 required
+                InputProps={{minLength:2}}
                 inputRef={comment}
                 multiline
                 value={commentValue}
-                inputProps={{minLength:1}}
+                inputProps={{ minLength: 1 }}
                 onChange={(e) => {
-                  setCommentValue(e.target.value)
+                  setCommentValue(e.target.value);
                 }}
                 sx={{
                   "& legend": { display: "none" },
@@ -238,11 +241,7 @@ export const OneItem = () => {
                   marginRight: "10px",
                 }}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
+              <Button variant="contained" color="primary" type="submit">
                 Comment
               </Button>
             </Box>
@@ -296,7 +295,9 @@ export const OneItem = () => {
                       >
                         {e?.user?.fullName?.slice(0, 1)}
                       </Avatar>{" "}
-                      {e?.user?._id === user?._id ? "You" : e?.user?.fullName}
+                      {e?.user?._id === user?._id
+                        ? "You"
+                        : e?.user?.fullName || e?.user?.username||'Deleted account'}
                     </Typography>
                     <Typography variant="h6" component={"p"}>
                       {e?.body}

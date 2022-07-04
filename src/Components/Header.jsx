@@ -4,8 +4,6 @@ import { Container, Typography, Box, List, ListItem , Button, Avatar} from "@mui
 import { useState } from "react";
 import { deepOrange } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -13,6 +11,7 @@ import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Search from "./Search";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { MenuActions } from "../Redux/mobileMenuSlice";
 
 export const Header = () => {
@@ -44,7 +43,7 @@ export const Header = () => {
           alignItems: "center",
         }}
       >
-        <Button  onClick={handleMenu} className="header__burger" color="primary">
+        <Button onClick={handleMenu} className="header__burger" color="primary">
           <MenuRoundedIcon fontSize="large" />
         </Button>
         <Typography
@@ -63,7 +62,7 @@ export const Header = () => {
           sx={{ display: "flex", alignItems: "center", marginLeft: "20px" }}
         >
           <ListItem className="header__item">
-            <Link to="/home">
+            <Link to="/">
               <HomeRoundedIcon color="primary" fontSize="large" />
             </Link>
           </ListItem>
@@ -84,6 +83,15 @@ export const Header = () => {
               <SettingsIcon color="primary" fontSize="large" />
             </Link>
           </ListItem>
+          {user?.isAdmin ? (
+            <ListItem className="header__item">
+              <Link to="admin">
+                <AdminPanelSettingsIcon color="primary" fontSize="large" />
+              </Link>
+            </ListItem>
+          ) : (
+            ""
+          )}
           {!user ? (
             <ListItem className="header__item">
               <Link to="/login">
@@ -93,9 +101,15 @@ export const Header = () => {
           ) : (
             ""
           )}
-          {user&&<Avatar  className="header__avatar" sx={{ bgcolor: deepOrange[500] }} src={user?.img}>
-            {user?.fullName.slice(0, 1) || user?.username.slice(0, 1)}
-          </Avatar>}
+          {user && (
+            <Avatar
+              className="header__avatar"
+              sx={{ bgcolor: deepOrange[500] }}
+              src={user?.img}
+            >
+              {user?.fullName.slice(0, 1) || user?.username.slice(0, 1)}
+            </Avatar>
+          )}
           <ListItem className="header__item">
             {" "}
             {user ? (

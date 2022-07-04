@@ -3,9 +3,11 @@ import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
 import './Component.scss'
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 export default function Search() {
     const [items, setItems] = useState([]);
   const [selected, setSelected] = useState([]);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
     axios.get("http://localhost:7007/item_all").then((res) => {
@@ -31,7 +33,7 @@ export default function Search() {
         className="search__input"
         onChange={setSelected}
         options={items?.map((e) => e?.title)}
-        placeholder="Search item..."
+        placeholder={t("SearchItems")}
         selected={selected}
       
       />

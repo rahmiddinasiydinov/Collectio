@@ -7,15 +7,18 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { NavLink } from "react-router-dom";
 import './Component.scss';
 import { MenuActions } from "../Redux/mobileMenuSlice";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 export const MobileMenu = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const wrapper = useRef();
   const menu = useRef();
+  const { t } = useTranslation();
   const isOpen = useSelector(state => state?.menu?.isOpen);
   const handleMenu = () => {
     dispatch(MenuActions.toggleMenu(false))
@@ -106,7 +109,7 @@ export const MobileMenu = () => {
                 <NavLink to="/login" className="mobile__link">
                   <LoginRoundedIcon color="inherit" fontSize="medium" />
                   <Typography component={"span"} variant="h6" marginLeft="5px">
-                    Login
+                    {t("Login")}
                   </Typography>
                 </NavLink>
               </ListItem>
@@ -122,10 +125,10 @@ export const MobileMenu = () => {
               </ListItem>
             )}
             <ListItem>
-              <NavLink to="/home" className="mobile__link">
+              <NavLink to="/" className="mobile__link">
                 <HomeRoundedIcon color="inherit" fontSize="medium" />
                 <Typography component={"span"} variant="h6" marginLeft="5px">
-                  Home
+                  {t("Home")}
                 </Typography>
               </NavLink>
             </ListItem>
@@ -133,7 +136,7 @@ export const MobileMenu = () => {
               <NavLink to="collection" className="mobile__link">
                 <CollectionsIcon color="inherit" fontSize="medium" />
                 <Typography component={"span"} variant="h6" marginLeft="5px">
-                  Collections
+                  {t("Collection")}
                 </Typography>
               </NavLink>
             </ListItem>
@@ -142,7 +145,17 @@ export const MobileMenu = () => {
                 <NavLink to="add" className="mobile__link">
                   <AddBoxIcon color="inherit" fontSize="medium" />
                   <Typography component={"span"} variant="h6" marginLeft="5px">
-                    Create
+                    {t("Create")}
+                  </Typography>
+                </NavLink>
+              </ListItem>
+            )}
+            {user?.isAdmin && (
+              <ListItem>
+                <NavLink to="admin" className="mobile__link">
+                  <AdminPanelSettingsIcon color="inherit" fontSize="medium" />
+                  <Typography component={"span"} variant="h6" marginLeft="5px">
+                    Admin
                   </Typography>
                 </NavLink>
               </ListItem>
@@ -151,7 +164,7 @@ export const MobileMenu = () => {
               <NavLink to="settings" className="mobile__link">
                 <SettingsIcon color="inherit" fontSize="medium" />
                 <Typography component={"span"} variant="h6" marginLeft="5px">
-                  Settings
+                  {t("Settings")}
                 </Typography>
               </NavLink>
             </ListItem>

@@ -21,10 +21,12 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import { languageStore } from "../../Utils/Language";
-
+import { useDispatch } from "react-redux";
+import { userActions } from "../../Redux/userSlice";
 const arrImg = [
   back1,
   back2,
@@ -40,17 +42,19 @@ const arrImg = [
 const random = Math.floor(Math.random() * 10);
 
 export const Login = () => {
-  const currentLanguage = window.localStorage.getItem("language") || "uz";
+  const currentLanguage = JSON.parse(window.localStorage.getItem("language")) || "uz";
   const [lang, setLang] = useState(currentLanguage);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(0);
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setLang(e.target.value);
+    i18n.changeLanguage(e.target.value)
+    window.localStorage.setItem("language", JSON.stringify(e.target.value));
   };
-  useEffect(() => {
-    window.localStorage.setItem("language", lang);
-  }, [lang]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,9 +69,15 @@ export const Login = () => {
         setStatus(res.data?.status);
         setMessage(res.data?.message);
         if (res.data?.status === 200) {
+          dispatch(userActions.setUser(res?.data.data));
+          window.localStorage.setItem('user', JSON.stringify(res.data?.data))
           setTimeout(() => {
-            navigate("/home");
+            navigate("/");
           }, 1000);
+        } else {
+          dispatch(userActions.setUser(null));
+          window.localStorage.setItem('user', JSON.stringify(null))
+          
         }
       });
   };
@@ -94,21 +104,21 @@ export const Login = () => {
             sx={{ position: "absolute", left: "50px", top: "30px" }}
             variant="outlined"
           >
-            <Link to="/home">
-              <Typography variant="h6">Home</Typography>
+            <Link to="/">
+              <Typography variant="h6">{ t("Home")}</Typography>
             </Link>{" "}
           </Button>
           <FormControl
             sx={{ position: "absolute", right: "50px", top: "30px" }}
           >
             <InputLabel id="demo-simple-select-label">
-              {languageStore[lang]?.language}
+              {t("Language")}
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={lang}
-              label={`${languageStore[lang]?.auth.username}`}
+              label={`${t("Username")}`}
               onChange={handleChange}
             >
               <MenuItem value={"uz"}>Uz</MenuItem>
@@ -124,7 +134,7 @@ export const Login = () => {
               fontWeight: "500",
             }}
           >
-            {languageStore[lang]?.auth.login}
+            {t("Login")}
           </Typography>
 
           <FormControl
@@ -144,7 +154,7 @@ export const Login = () => {
               inputProps={{ minLength: 2 }}
               id="username"
               name="username"
-              label={`${languageStore[lang]?.auth.username}`}
+              label={`${t("Username")}`}
               sx={{
                 width: "100%",
                 marginBottom: "50px",
@@ -155,7 +165,7 @@ export const Login = () => {
               inputProps={{ minLength: 4 }}
               id="password"
               name="password"
-              label={`${languageStore[lang]?.auth.password}`}
+              label={`${t('Password')}`}
               sx={{
                 width: "100%",
                 marginBottom: "5px",
@@ -172,7 +182,7 @@ export const Login = () => {
               variant="contained"
               sx={{ marginTop: "30px", fontSize: "18px" }}
             >
-              {languageStore[lang]?.auth.submit}
+              {t('Submit')}
             </Button>
             <Box component={"div"} sx={{ marginTop: "20px" }}>
               <Typography
@@ -180,7 +190,7 @@ export const Login = () => {
                 component={"span"}
                 sx={{ marginRight: "10px" }}
               >
-                {languageStore[lang]?.auth.haveNotAccount}
+                {t('DoNotYouHaveAccount')}
               </Typography>
               <Link to="/registration">
                 {" "}
@@ -189,7 +199,7 @@ export const Login = () => {
                   sx={{ fontSize: "20px", fontWeight: "700" }}
                   color="primary.light"
                 >
-                  {languageStore[lang]?.auth.register}
+                  {t("Register")}
                 </Typography>
               </Link>
             </Box>

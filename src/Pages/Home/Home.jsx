@@ -2,17 +2,16 @@ import { Container, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HomeSlide } from "../../Components/HomeSlide";
-
+import { useTranslation } from "react-i18next";
 export const Home = () => {
   const [collection, setCollection] = useState([]);
   const [items, setItems] = useState([]);
+  const { t } = useTranslation();
   useEffect(() => {
     axios.get("http://localhost:7007/collection").then(res => {
-      console.log(res.data?.data);
       setCollection(res.data?.data)
     });
     axios.get("http://localhost:7007/item").then(res => {
-      console.log(res.data?.data);
       setItems(res.data?.data)
     });
   }, []);
@@ -34,7 +33,7 @@ export const Home = () => {
               color={"primary"}
               marginBottom={'50px'}
             >
-              Recent collections
+              {t("RecentCollections")}
             </Typography>
             <HomeSlide array={collection} type='collection'/>
           </Box>
@@ -49,7 +48,7 @@ export const Home = () => {
               sx={{margin:'50px 0'}}
               color={"primary"}
             >
-              Recent items
+          {t("RecentItems")}
             </Typography>
             <HomeSlide array={items}  type='item'/>
           </Box>

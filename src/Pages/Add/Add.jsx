@@ -3,8 +3,10 @@ import { useState } from "react";
 import './Add.scss';
 import { AddItem } from "../../Components/AddItem";
 import { AddCollection } from "../../Components/AddCollection";
+import { useTranslation } from "react-i18next";
 export const Add = () => {
-    const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0);
+  const {t} = useTranslation()
     return (
       <>
         <Container maxWidth="xl">
@@ -22,7 +24,7 @@ export const Add = () => {
               onClick={() => setPage(0)}
               className={`add__menu ${!page ? "add__active" : ""}`}
             >
-              Collection
+              {t("Collection")}
             </Typography>
             <Typography
               component="span"
@@ -37,7 +39,7 @@ export const Add = () => {
               onClick={() => setPage(1)}
               className={`add__menu ${page ? "add__active" : ""}`}
             >
-              Items
+              {t("Item")}
             </Typography>
           </Box>
           {

@@ -21,7 +21,7 @@ export const CardCollection = ({img, name, id,desc, type}) => {
         <CardActions>
           <Button size="small">
             {" "}
-            <Link to={type==='item'?`/home/item/${id}`: `/home/collection/${id}`}>Learn more</Link>
+            <Link to={type==='item'?`/item/${id}`: `/collection/${id}`}>Learn more</Link>
           </Button>
         </CardActions>
       </Card>

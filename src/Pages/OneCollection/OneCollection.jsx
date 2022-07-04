@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import dateFormat from "dateformat";
 import { ItemCard } from "../../Components/ItemCard";
-import { Link } from "react-router-dom";
-import { width } from "@mui/system";
-import { deepPurple } from "@mui/material/colors";
 export const OneCollection = () => {
   const [collection, setCollection] = useState({});
   const { id } = useParams();
@@ -35,7 +32,7 @@ export const OneCollection = () => {
             <Avatar sx={{marginRight:'10px'}} src={collection?.user?.img}>
               {collection?.user?.fullName?.slice(0, 1)}
             </Avatar>{" "}
-            {collection?.user?.fullName}
+            {collection?.user?.fullName || collection?.user?.username ||  "Deleted account"}
           </Typography>
           <img
             width={"100%"}

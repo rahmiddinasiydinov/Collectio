@@ -52,7 +52,7 @@ export default function HomeItemCard({ username, img, date, avatar, desc, topic,
               )}
             </Avatar>
           }
-          title={username}
+          title={username || "Deleted account"}
           subheader={
             date
               ? dateFormat(date, " mmmm d, yyyy")

@@ -13,6 +13,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
+import { useTranslation } from "react-i18next";
 
 export const AddItem = () => {
   const user = useSelector((state) => state.user.user);
@@ -20,6 +21,7 @@ export const AddItem = () => {
   const [items, setItems] = useState(null);
   const [tags, setTags] = useState(null);
   const [collections, setCollections] = useState(null);
+  const { t } = useTranslation();
   const config = {
     headers: {
       "content-type": "multipart/form-data",
@@ -75,7 +77,7 @@ export const AddItem = () => {
           marginBottom={"20px"}
           color="primary"
         >
-          Create new Item
+          {t("CreateItem")}
         </Typography>
         <FormControl
           component={"form"}
@@ -104,7 +106,7 @@ export const AddItem = () => {
               <TextField
                 className="add__input"
                 id="standard-text-input"
-                label="Name of Item"
+                label={t("TitleForItem")}
                 InputProps={{ minLength: "2" }}
                 type="text"
                 autoComplete="current-password"
@@ -116,7 +118,7 @@ export const AddItem = () => {
               />
               <FormControl sx={{ marginTop: "20px", width: "100%" }}>
                 <InputLabel id="demo-simple-select-autowidth-label">
-                  Choose Collection
+                 {t("ChooseCollection")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
@@ -127,7 +129,7 @@ export const AddItem = () => {
                   label="Choose Collection"
                 >
                   <MenuItem value="">
-                    <em>None</em>
+                    <em>{t("None")}</em>
                   </MenuItem>
 
                   {collections &&
@@ -142,7 +144,7 @@ export const AddItem = () => {
               </FormControl>
               <FormControl sx={{ marginTop: "20px", width: "100%" }}>
                 <InputLabel id="demo-simple-select-autowidth-label">
-                  Choose a tag
+                  {t("ChooseTag")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
@@ -152,7 +154,7 @@ export const AddItem = () => {
                   required
                 >
                   <MenuItem value="">
-                    <em>None</em>
+                    <em>{ t("None")}</em>
                   </MenuItem>
 
                   {tags &&
@@ -178,8 +180,8 @@ export const AddItem = () => {
                 color="secondary"
               >
                 {file?.name?.length > 3
-                  ? "Uploaded successfully"
-                  : "Upload only one image *"}
+                  ? t("UploadedSuccessfully")
+                  : t("OneImage")}
                 <input
                   type="file"
                   name="img"
@@ -199,7 +201,7 @@ export const AddItem = () => {
               <TextField
                 id="outlined-multiline-flexible"
                 required
-                label="Description"
+                label={t("Description")}
                 multiline
                 rows={4}
                 sx={{ width: "100%", maxWidth: "100%" }}
@@ -216,7 +218,7 @@ export const AddItem = () => {
                 color="primary"
                 variant="contained"
               >
-                Submit
+                {t("Create")}
               </Button>
             </Box>
           </Box>
@@ -228,7 +230,7 @@ export const AddItem = () => {
           marginTop={"50px"}
         >
           {" "}
-          My Items
+            {t("MyItems")}
         </Typography>
         <List
           component={"ul"}
@@ -254,7 +256,7 @@ export const AddItem = () => {
             })
           ) : (
             <Typography color={"secondary"} variant="h5">
-              You do not have any items yet
+              {t("YouDoNotHaveItem")}
             </Typography>
           )}
         </List>
