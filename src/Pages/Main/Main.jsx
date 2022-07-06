@@ -11,16 +11,16 @@ export const Main = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(window.localStorage.getItem('user')) || null;
   dispatch(userActions.setUser(user));
-  useEffect(() => {
-    axios.get("user").then(res => {
-      dispatch(userActions.setUser(res.data?.user))
-      dispatch(userActions.setAdmin(null));
-      console.log(res);
-      if (!res.data.user) {
-        window.localStorage.removeItem('user')
-      }
-    });
-  }, [])
+  // useEffect(() => {
+  //   axios.get("user").then(res => {
+  //     dispatch(userActions.setUser(res.data?.user))
+  //     dispatch(userActions.setAdmin(null));
+  //     console.log(res);
+  //     if (!res.data.user) {
+  //       window.localStorage.removeItem('user')
+  //     }
+  //   });
+  // }, [])
   return (
     <main className="main">
       <ViewAs/>
