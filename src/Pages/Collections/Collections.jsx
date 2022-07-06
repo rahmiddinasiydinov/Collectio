@@ -8,7 +8,7 @@ import FileDownload from 'js-file-download';
 export const Collections = () => {
   const { t } = useTranslation();
   const handleDownload = () => {
-    axios.get("http://localhost:7007/collection_csv").then(res => {
+    axios.get("collection_csv").then(res => {
       FileDownload(res?.data, 'collections.scv')
     });
   };

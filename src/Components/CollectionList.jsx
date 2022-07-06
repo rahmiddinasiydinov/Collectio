@@ -22,7 +22,7 @@ export const CollectionList = () => {
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:7007/collection_all").then((res) => {
+    axios.get("collection_all").then((res) => {
       setCollections(res.data?.data);
     });
   }, []);

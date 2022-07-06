@@ -20,7 +20,7 @@ export default function Admin() {
     if (!user || !user?.isAdmin) navigate("/");
   }, [user]);
   useEffect(() => {
-    axios.get("http://localhost:7007/users").then((res) => {
+    axios.get("users").then((res) => {
       console.log(res.data);
       setUsers(res.data?.data);
     });
@@ -28,7 +28,7 @@ export default function Admin() {
 
   const handleAdmin = (adminId) => {
     axios
-      .put(`http://localhost:7007/admin/status?id=${adminId}`)
+      .put(`admin/status?id=${adminId}`)
       .then((res) => {
         console.log(res.data);
         if (res?.data?.status === 200) {
@@ -42,7 +42,7 @@ export default function Admin() {
       });
   };
   const handleUser = (userId) => {
-    axios.put(`http://localhost:7007/user/status?id=${userId}`).then((res) => {
+    axios.put(`user/status?id=${userId}`).then((res) => {
       if (res?.data?.status === 200) {
         setUsers(res.data?.data);
       } else {
@@ -55,7 +55,7 @@ export default function Admin() {
   };
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:7007/user/delete?Ids=${selected}`)
+      .delete(`user/delete?Ids=${selected}`)
       .then((res) => {
         console.log(res);
         if (res.data?.status === 200) {
@@ -64,7 +64,7 @@ export default function Admin() {
       });
   };
   const handleView = (userId) => {
-    axios.get(`http://localhost:7007/view_as?userId=${userId}`).then((res) => {
+    axios.get(`view_as?userId=${userId}`).then((res) => {
       if (res.data?.user && res.data?.admin) {
         dispatch(userActions.setAdmin(res.data.admin));
         dispatch(userActions.setUser(res.data.user));

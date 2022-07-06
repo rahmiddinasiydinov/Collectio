@@ -35,21 +35,21 @@ export const AddItem = () => {
   };
     useEffect(() => {
       axios
-        .get(`http://localhost:7007/my_items?id=${user?._id}`)
+        .get(`my_items?id=${user?._id}`)
         .then((res) => {
           setItems(res.data?.data);
         });
     }, [user]);
 
   useEffect(() => {
-    axios.get("http://localhost:7007/tags").then((res) => {
+    axios.get("tags").then((res) => {
       console.log(res.data.data);
       setTags(res.data.data);
     });
   }, []);
   useEffect(() => {
     axios
-      .get(`http://localhost:7007/my_collections?id=${user._id}`)
+      .get(`my_collections?id=${user._id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setCollections(res?.data?.data);
@@ -67,7 +67,7 @@ export const AddItem = () => {
     formData.append("tag", tag.value);
     formData.append("collection", collection.value);
     formData.append("isMarkdown", isMarkdown);
-    axios.post("http://localhost:7007/item", formData, config).then((res) => {
+    axios.post("item", formData, config).then((res) => {
       console.log(res);
       setItems([...res.data?.data?.items]);
     });

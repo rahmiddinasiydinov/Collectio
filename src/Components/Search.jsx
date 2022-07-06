@@ -10,7 +10,7 @@ export default function Search() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get("http://localhost:7007/item_all").then((res) => {
+    axios.get("item_all").then((res) => {
       setItems(res.data?.data);
     });
   }, []);

@@ -12,7 +12,7 @@ export const Main = () => {
   const user = JSON.parse(window.localStorage.getItem('user')) || null;
   dispatch(userActions.setUser(user));
   useEffect(() => {
-    axios.get("http://localhost:7007/user").then(res => {
+    axios.get("user").then(res => {
       dispatch(userActions.setUser(res.data?.user))
       dispatch(userActions.setAdmin(null));
       console.log(res);

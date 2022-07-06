@@ -39,14 +39,14 @@ export const OneItem = () => {
   const smiles = ["😂", "😁", "😘", "😉", "😌", "😢", "😔", "😭"];
   useEffect(() => {
     axios
-      .get(`http://localhost:7007/one_item?id=${id}&&userId=${user?._id}`)
+      .get(`one_item?id=${id}&&userId=${user?._id}`)
       .then((res) => {
         console.log(res.data.data);
         setItem(res.data?.data);
       });
   }, [id, user]);
   useEffect(() => {
-    axios.get("http://localhost:7007/item").then((res) => {
+    axios.get("item").then((res) => {
       setRecentItems(res.data?.data);
     });
   }, []);

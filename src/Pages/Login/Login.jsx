@@ -60,7 +60,7 @@ export const Login = () => {
     e.preventDefault();
     const { username, password } = e.target.elements;
     axios
-      .post("http://localhost:7007/login", {
+      .post("login", {
         username: username.value,
         password: password.value,
       })

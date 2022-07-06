@@ -21,6 +21,7 @@ import { SocketProvider } from "./Contexts/SocketIo";
 import Admin from "./Pages/Admin/Admin";
 function App() {
   axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = "http://localhost:7007/";
   const themeType = useSelector(state => state.theme.currentTheme);
   console.log(themeType);
   return (

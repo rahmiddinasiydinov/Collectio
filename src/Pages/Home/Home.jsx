@@ -8,10 +8,10 @@ export const Home = () => {
   const [items, setItems] = useState([]);
   const { t } = useTranslation();
   useEffect(() => {
-    axios.get("http://localhost:7007/collection").then(res => {
+    axios.get("collection").then(res => {
       setCollection(res.data?.data)
     });
-    axios.get("http://localhost:7007/item").then(res => {
+    axios.get("item").then(res => {
       setItems(res.data?.data)
     });
   }, []);

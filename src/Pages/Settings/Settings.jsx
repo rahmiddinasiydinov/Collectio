@@ -32,7 +32,7 @@ export const Settings = () => {
   }
   const handleLogout = () => {
     if (user) {
-      axios.get("http://localhost:7007/logout").then((res) => console.log(res));
+      axios.get("logout").then((res) => console.log(res));
       dispatch(userActions.setUser(null));
       window.localStorage.removeItem("user");
     } else {
@@ -46,7 +46,7 @@ export const Settings = () => {
           const formData = new FormData();
           formData.append("img", img);
           axios
-            .post("http://localhost:7007/profile", formData, {
+            .post("profile", formData, {
               headers: {
                 "content-type": "multipart/form-data",
               },

@@ -31,7 +31,7 @@ export const AddCollection = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:7007/my_collections?id=${user?._id}`)
+      .get(`my_collections?id=${user?._id}`)
       .then((res) => {
         setCollections(res.data?.data);
       });
@@ -48,7 +48,7 @@ export const AddCollection = () => {
     formData.append("topic", topic.value);
     formData.append("isMarkdown", isMarkdown);
     axios
-      .post("http://localhost:7007/collection", formData, config)
+      .post("collection", formData, config)
       .then((res) => {
         console.log(res.data.data?.collections);
         setCollections([...res.data?.data?.collections]);

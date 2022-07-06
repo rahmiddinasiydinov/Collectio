@@ -60,7 +60,7 @@ export const Registration = () => {
     e.preventDefault();
     const { fullName, username, password, email } = e.target.elements;
     axios
-      .post("http://localhost:7007/register", {
+      .post("register", {
         fullName: fullName.value,
         username: username.value,
         email: email.value,

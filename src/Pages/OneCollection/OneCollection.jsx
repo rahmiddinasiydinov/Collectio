@@ -10,7 +10,7 @@ export const OneCollection = () => {
   const [collection, setCollection] = useState({});
   const { id } = useParams();
   useEffect(() => {
-    axios.get(`http://localhost:7007/one_collection?id=${id}`).then((res) => {
+    axios.get(`one_collection?id=${id}`).then((res) => {
       console.log(res.data.data);
       setCollection(res.data?.data);
     });
