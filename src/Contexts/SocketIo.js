@@ -3,7 +3,7 @@ import { createContext } from "react";
 
 export const socketContext = createContext();
 export const SocketProvider = ({children}) => {
-    const socket = io("http://localhost:7007");
+    const socket = io("https://collectios.herokuapp.com/");
     return (
         <socketContext.Provider value={socket}>
             { children}
