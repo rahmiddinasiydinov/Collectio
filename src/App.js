@@ -23,7 +23,6 @@ function App() {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "https://collectios.herokuapp.com/";
   const themeType = useSelector(state => state.theme.currentTheme);
-  console.log(themeType);
   return (
     <ThemeProvider theme={themeType === "light" ? theme : themeDark}>
       <SocketProvider>
