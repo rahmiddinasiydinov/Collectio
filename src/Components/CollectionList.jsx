@@ -44,6 +44,7 @@ export const CollectionList = () => {
             alt={item?.name}
             loading="lazy"
             width={`${100 / columns - 1}%`}
+            security={false}
           />
           <ImageListItemBar
             title={item?.name}
