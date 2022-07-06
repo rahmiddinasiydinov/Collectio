@@ -1,4 +1,3 @@
-import { Label } from "@mui/icons-material";
 import {
   Box,
   Typography,
@@ -6,19 +5,25 @@ import {
   TextField,
   Button,
   List,
-  ListItem,
+  FormGroup,
+  FormControlLabel, 
+  Checkbox
 } from "@mui/material";
-import { color } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
+import { Markdown } from "./Markdown";
+
+
 export const AddCollection = () => {
   const { t } = useTranslation();
   const user = useSelector((state) => state.user.user);
   const [file, setFile] = useState("");
   const [collections, setCollections] = useState(null);
+  const [markdown, setMarkdown] = useState('');
+  const [isMarkdown, setIsMarkdown] = useState(false);
   const config = {
     headers: {
       "content-type": "multipart/form-data",
@@ -41,6 +46,7 @@ export const AddCollection = () => {
     formData.append("desc", desc.value);
     formData.append("userId", user?._id);
     formData.append("topic", topic.value);
+    formData.append("isMarkdown", isMarkdown);
     axios
       .post("http://localhost:7007/collection", formData, config)
       .then((res) => {
@@ -143,15 +149,33 @@ export const AddCollection = () => {
                 maxWidth: "100%",
               }}
             >
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={isMarkdown}
+                      onChange={() => {
+                        setIsMarkdown(!isMarkdown);
+                      }}
+                    />
+                  }
+                  label="Support Markdown"
+                />
+              </FormGroup>
               <TextField
                 id="outlined-multiline-flexible"
                 required
                 label={t("Description")}
                 multiline
-                rows={4}
                 sx={{ width: "100%", maxWidth: "100%" }}
                 name="desc"
+                onChange={(e) => {
+                  setMarkdown(e.target.value);
+                }}
               />
+              <Typography sx={{ display: isMarkdown?"block":'none', marginTop: '10px', padding: '10px', border: "1px solid #999999", borderRadius: '5px', width: "100%", maxWidth: "100%" }}>
+             <Markdown text={markdown} />
+              </Typography>
               <Button
                 type="submit"
                 sx={{
@@ -195,6 +219,7 @@ export const AddCollection = () => {
                   img={e?.img}
                   name={e?.name}
                   id={e?._id}
+                  isMarkdown={e?.isMarkdown}
                 />
               );
             })

@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { socketContext } from "../../Contexts/SocketIo";
 import { useContext } from "react";
 import { deepOrange } from "@mui/material/colors";
+import { Markdown } from "../../Components/Markdown";
 
 export const OneItem = () => {
   const socket = useContext(socketContext);
@@ -35,7 +36,7 @@ export const OneItem = () => {
   const [show, setShow] = useState(false);
   const comment = useRef();
   const { id } = useParams();
-
+  const smiles = ["😂", "😁", "😘", "😉", "😌", "😢", "😔", "😭"];
   useEffect(() => {
     axios
       .get(`http://localhost:7007/one_item?id=${id}&&userId=${user?._id}`)
@@ -210,40 +211,49 @@ export const OneItem = () => {
           </Typography>
 
           <Typography variant="h6" marginTop={"20px"}>
-            {item?.desc}
+            {item?.isMarkdown ? <Markdown text={item?.desc} /> : item?.desc}
           </Typography>
           {user && (
-            <Box
-              component="form"
-              onSubmit={handleComment}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-                marginTop: "30px",
-              }}
-            >
-              <TextField
-                required
-                InputProps={{minLength:2}}
-                inputRef={comment}
-                multiline
-                value={commentValue}
-                inputProps={{ minLength: 1 }}
-                onChange={(e) => {
-                  setCommentValue(e.target.value);
-                }}
+            <Box>
+              <Box
+                component="form"
+                onSubmit={handleComment}
                 sx={{
-                  "& legend": { display: "none" },
-                  "& fieldset": { top: 0 },
-                  width: "400px",
-                  maxWidth: "100%",
-                  marginRight: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: "30px",
                 }}
-              />
-              <Button variant="contained" color="primary" type="submit">
-                Comment
-              </Button>
+              >
+                <TextField
+                  required
+                  InputProps={{ minLength: 2 }}
+                  inputRef={comment}
+                  multiline
+                  value={commentValue}
+                  inputProps={{ minLength: 1 }}
+                  onChange={(e) => {
+                    setCommentValue(e.target.value);
+                  }}
+                  sx={{
+                    "& legend": { display: "none" },
+                    "& fieldset": { top: 0 },
+                    width: "400px",
+                    maxWidth: "100%",
+                    marginRight: "10px",
+                  }}
+                />
+                <Button variant="contained" color="primary" type="submit">
+                  Comment
+                </Button>
+              </Box>
+              <Box marginTop={'10px'}>
+                {smiles.map(e=>{
+                  return <Typography  sx={{fontSize:'20px', padding:'3px', width:"10px", marginRight:'10px', cursor:"pointer"}} component='span' onClick={() => {
+                    setCommentValue(commentValue+e)
+                  }}>{e}</Typography>
+                }) }
+              </Box>
             </Box>
           )}
           <Typography
@@ -297,7 +307,9 @@ export const OneItem = () => {
                       </Avatar>{" "}
                       {e?.user?._id === user?._id
                         ? "You"
-                        : e?.user?.fullName || e?.user?.username||'Deleted account'}
+                        : e?.user?.fullName ||
+                          e?.user?.username ||
+                          "Deleted account"}
                     </Typography>
                     <Typography variant="h6" component={"p"}>
                       {e?.body}

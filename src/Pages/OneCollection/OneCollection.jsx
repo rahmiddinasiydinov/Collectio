@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import dateFormat from "dateformat";
 import { ItemCard } from "../../Components/ItemCard";
+import { Markdown } from "../../Components/Markdown";
 export const OneCollection = () => {
   const [collection, setCollection] = useState({});
   const { id } = useParams();
@@ -19,7 +20,7 @@ export const OneCollection = () => {
       <Container
         className="oneCollection__wrapper"
         maxWidth="xl"
-        sx={{ display: "flex", flexWrap: "wrap", marginBottom:'30px' }}
+        sx={{ display: "flex", flexWrap: "wrap", marginBottom: "30px" }}
       >
         <Box
           className="oneCollection__left"
@@ -28,11 +29,20 @@ export const OneCollection = () => {
           padding={"10px"}
           marginTop="30px"
         >
-          <Typography variant="h6" color={"primary.dark"} marginBottom='20px' component={"span"} display='flex' alignItems={'center'}>
-            <Avatar sx={{marginRight:'10px'}} src={collection?.user?.img}>
+          <Typography
+            variant="h6"
+            color={"primary.dark"}
+            marginBottom="20px"
+            component={"span"}
+            display="flex"
+            alignItems={"center"}
+          >
+            <Avatar sx={{ marginRight: "10px" }} src={collection?.user?.img}>
               {collection?.user?.fullName?.slice(0, 1)}
             </Avatar>{" "}
-            {collection?.user?.fullName || collection?.user?.username ||  "Deleted account"}
+            {collection?.user?.fullName ||
+              collection?.user?.username ||
+              "Deleted account"}
           </Typography>
           <img
             width={"100%"}
@@ -54,7 +64,7 @@ export const OneCollection = () => {
           </Typography>
 
           <Typography variant="h6" marginTop={"20px"}>
-            {collection?.desc}
+            {collection?.isMarkdown ? <Markdown text={collection?.desc} /> : collection?.desc}
           </Typography>
         </Box>
         <Box
@@ -87,7 +97,7 @@ export const OneCollection = () => {
               border: "1px solid rgba",
             }}
           >
-            {collection?.items?.length>0 ? (
+            {collection?.items?.length > 0 ? (
               collection?.items?.map((e) => {
                 return (
                   <ListItem
@@ -96,10 +106,10 @@ export const OneCollection = () => {
                       display: "flex",
                       justifyContent: "center",
                       padding: "0",
-                      marginBottom:'20px'
+                      marginBottom: "20px",
                     }}
                   >
-                    <ItemCard img={e?.img} title={e?.title} id={e?._id}/>
+                    <ItemCard img={e?.img} title={e?.title} id={e?._id} />
                   </ListItem>
                 );
               })

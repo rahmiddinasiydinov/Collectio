@@ -36,6 +36,7 @@ export const HomeSlide = ({ array, type }) => {
       display="flex"
       justifyContent={"center"}
       alignItems="center"
+      marginBottom={'50px'}
     >
       <Swiper
         slidesPerView={columns}
@@ -63,6 +64,7 @@ export const HomeSlide = ({ array, type }) => {
                     title={e?.name}
                     topic={e?.topic}
                     id={e?._id}
+                    isMarkdown={e?.isMarkdown}
                   />
                 </SwiperSlide>
               );
@@ -80,6 +82,7 @@ export const HomeSlide = ({ array, type }) => {
                   topic={e?.tag?.title}
                   title={e?.title}
                   collection={e?.collectionName.name}
+                  isMarkdown={e?.isMarkdown}
                 />
               </SwiperSlide>
             );

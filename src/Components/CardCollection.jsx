@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent,Typography, Button, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
-
-export const CardCollection = ({img, name, id,desc, type}) => {
+import { Markdown } from "./Markdown";
+export const CardCollection = ({img, name, id,desc, type, isMarkdown}) => {
     return (
       <Card sx={{ width:'300px',  maxWidth: '100%', marginLeft:'20px', marginTop:'20px'  }}>
         <CardMedia
@@ -15,7 +15,7 @@ export const CardCollection = ({img, name, id,desc, type}) => {
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {desc}
+            {isMarkdown ? <Markdown text={ desc} />:desc}
           </Typography>
         </CardContent>
         <CardActions>

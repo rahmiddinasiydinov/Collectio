@@ -8,12 +8,16 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormControlLabel, 
+  FormGroup,
+  Checkbox
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
+import { Markdown } from "./Markdown";
 
 export const AddItem = () => {
   const user = useSelector((state) => state.user.user);
@@ -21,6 +25,8 @@ export const AddItem = () => {
   const [items, setItems] = useState(null);
   const [tags, setTags] = useState(null);
   const [collections, setCollections] = useState(null);
+  const [markdown, setMarkdown] = useState('');
+  const [isMarkdown, setIsMarkdown] = useState(false);
   const { t } = useTranslation();
   const config = {
     headers: {
@@ -60,7 +66,9 @@ export const AddItem = () => {
     formData.append("userId", user?._id);
     formData.append("tag", tag.value);
     formData.append("collection", collection.value);
+    formData.append("isMarkdown", isMarkdown);
     axios.post("http://localhost:7007/item", formData, config).then((res) => {
+      console.log(res);
       setItems([...res.data?.data?.items]);
     });
   };
@@ -118,7 +126,7 @@ export const AddItem = () => {
               />
               <FormControl sx={{ marginTop: "20px", width: "100%" }}>
                 <InputLabel id="demo-simple-select-autowidth-label">
-                 {t("ChooseCollection")}
+                  {t("ChooseCollection")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
@@ -154,7 +162,7 @@ export const AddItem = () => {
                   required
                 >
                   <MenuItem value="">
-                    <em>{ t("None")}</em>
+                    <em>{t("None")}</em>
                   </MenuItem>
 
                   {tags &&
@@ -198,15 +206,43 @@ export const AddItem = () => {
                 maxWidth: "100%",
               }}
             >
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={isMarkdown}
+                      onChange={() => {
+                        setIsMarkdown(!isMarkdown);
+                      }}
+                    />
+                  }
+                  label="Support Markdown"
+                />
+              </FormGroup>
               <TextField
                 id="outlined-multiline-flexible"
                 required
                 label={t("Description")}
                 multiline
-                rows={4}
+                onChange={(e) => {
+                  setMarkdown(e.target.value)
+                }}
                 sx={{ width: "100%", maxWidth: "100%" }}
                 name="desc"
               />
+              <Typography
+                sx={{
+                  display: isMarkdown ? "block" : "none",
+                  marginTop: "10px",
+                  padding: "10px",
+                  border: "1px solid #999999",
+                  borderRadius: "5px",
+                  width: "100%",
+                  maxWidth: "100%",
+                }}
+              >
+                <Markdown text={markdown} />
+              </Typography>
               <Button
                 type="submit"
                 sx={{
@@ -230,7 +266,7 @@ export const AddItem = () => {
           marginTop={"50px"}
         >
           {" "}
-            {t("MyItems")}
+          {t("MyItems")}
         </Typography>
         <List
           component={"ul"}
@@ -238,7 +274,7 @@ export const AddItem = () => {
             display: "flex",
             marginTop: "20px",
             flexWrap: "wrap",
-            justifyContent: window.innerWidth> 500 ? `flex-start` : "center",
+            justifyContent: window.innerWidth > 500 ? `flex-start` : "center",
           }}
         >
           {items?.length > 0 ? (
@@ -250,7 +286,8 @@ export const AddItem = () => {
                   img={e?.img}
                   name={e?.title}
                   id={e?._id}
-                  type ='item'
+                  type="item"
+                  isMarkdown={e?.isMarkdown}
                 />
               );
             })

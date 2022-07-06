@@ -17,6 +17,8 @@ import { Paper } from "@mui/material";
 import dateFormat from "dateformat";
 import { Box } from "@mui/material";
 import {Link} from 'react-router-dom'
+import { Markdown } from "./Markdown";
+import { useSelector } from "react-redux";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -28,7 +30,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function HomeCard({username, img, avatar, date, desc, title, topic, id}) {
+export default function HomeCard({ username, img, avatar, date, desc, title, topic, id, isMarkdown }) {
+  
+  const theme = useSelector(state=>state?.theme?.currentTheme)
   return (
     <Card sx={{ width: "400px", maxWidth: "100%", borderRadius: "10px" }}>
       <Paper sx={{ padding: "10px", position: "relative" }}>
@@ -39,8 +43,8 @@ export default function HomeCard({username, img, avatar, date, desc, title, topi
             top: "30px",
             right: "0",
             backgroundColor: "#73777B",
-            color: '#FFFFFF',
-            padding: ' 2px 5px'
+            color: "#FFFFFF",
+            padding: " 2px 5px",
           }}
           component={"span"}
         >
@@ -69,16 +73,36 @@ export default function HomeCard({username, img, avatar, date, desc, title, topi
           sx={{ borderRadius: "10px" }}
         />
         <CardContent>
-          <Typography variant="h6" color={"primary"} sx={{ fontWeight: "700"}}>
+          <Typography variant="h6" color={"primary"} sx={{ fontWeight: "700" }}>
             {title}
           </Typography>
-          <Typography variant="body2" color="primary">
-            {desc}
+          <Typography
+            variant="body2"
+            color="primary"
+            height="100px"
+            sx={{
+              background: `linear-gradient(to bottom, ${
+                theme === "light" ? "#222" : "#fff"
+              }  1%, transparent)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {isMarkdown ? <Markdown text={desc} /> : desc}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-         <Link to={`collection/${id}`}><Typography color={'primary'} component='span' sx={{':hover':{color:'primary.light'}}}>View more</Typography></Link>
-          <IconButton sx={{marginLeft:'20px'}} aria-label="share">
+          <Link to={`collection/${id}`}>
+            <Typography
+              color={"primary"}
+              component="span"
+              sx={{ ":hover": { color: "primary.light" } }}
+            >
+              View more
+            </Typography>
+          </Link>
+          <IconButton sx={{ marginLeft: "20px" }} aria-label="share">
             <ShareIcon />
           </IconButton>
         </CardActions>

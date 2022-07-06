@@ -12,7 +12,9 @@ import { red } from "@mui/material/colors";
 import ShareIcon from "@mui/icons-material/Share";
 import { Paper, Box } from "@mui/material";
 import dateFormat from "dateformat";
+import { Markdown } from "./Markdown";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -24,10 +26,24 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function HomeItemCard({ username, img, date, avatar, desc, topic, id, title, collection }) {
+
+export default function HomeItemCard({
+  username,
+  img,
+  date,
+  avatar,
+  desc,
+  topic,
+  id,
+  title,
+  collection,
+  isMarkdown,
+}) {
+
+  const theme = useSelector(state=>state?.theme?.currentTheme)
   return (
     <Card sx={{ width: "400px", maxWidth: "100%", borderRadius: "10px" }}>
-      <Paper sx={{ padding: "10px", position:'relative' }}>
+      <Paper sx={{ padding: "10px", position: "relative" }}>
         <Box
           className="card__topic"
           sx={{
@@ -75,12 +91,24 @@ export default function HomeItemCard({ username, img, date, avatar, desc, topic,
             }}
           >
             {title}
-            <Typography  component={"span"} display='block' fontSize="14px">
-              {'belongs to '+collection}
+            <Typography component={"span"} display="block" fontSize="14px">
+              {"belongs to " + collection}
             </Typography>
           </Typography>
-          <Typography variant="p" display={'block'} marginTop={'10px'} color="text.secondary">
-            {desc}
+          <Typography
+            variant="p"
+            display={"block"}
+            marginTop={"10px"}
+            height="150px"
+            sx={{
+              background:`linear-gradient(to bottom, ${theme==='light'?"#222":"#fff"}  1%, transparent)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+            color="text.secondary"
+          >
+            {isMarkdown ? <Markdown text={desc} /> : desc}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
