@@ -5,7 +5,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import ListSubheader from "@mui/material/ListSubheader";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
-
+import { CardMedia } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -38,14 +38,15 @@ export const CollectionList = () => {
     <ImageList sx={{ width: "100%" }}>
       {collections?.map((item) => (
         <ImageListItem key={item?._id}>
-          <img
-            src={`${item?.img}?w=248&fit=crop&auto=format`}
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            image={item?.img}
             srcSet={`${item?.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item?.name}
             loading="lazy"
             width={`${100 / columns - 1}%`}
-            security={false}
           />
+        
           <ImageListItemBar
             title={item?.name}
             subtitle={item?.user?.fullName}
