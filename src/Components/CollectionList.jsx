@@ -41,12 +41,17 @@ export const CollectionList = () => {
           <CardMedia
             component="img"
             alt="green iguana"
+            // height="140"
             image={item?.img}
-            srcSet={`${item?.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            // srcSet={`${item?.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
             loading="lazy"
-            width={`${100 / columns - 1}%`}
+            // width={`${100 / columns - 1}%`}
           />
-        
+          {/* <img
+            src={`${item?.img}?w=248&fit=crop&auto=format`}
+            alt={item?.name}
+            security={false}
+          /> */}
           <ImageListItemBar
             title={item?.name}
             subtitle={item?.user?.fullName}
