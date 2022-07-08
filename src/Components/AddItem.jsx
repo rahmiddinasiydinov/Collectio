@@ -37,6 +37,7 @@ export const AddItem = () => {
       axios
         .get(`my_items?id=${user?._id}`)
         .then((res) => {
+          console.log(res.data.data);
           setItems(res.data?.data);
         });
     }, [user]);
@@ -75,7 +76,16 @@ export const AddItem = () => {
   const handleChange = (e) => {
     setFile(e.target.files[0]);
   };
-  
+  const handleDelete = (id) => {
+    console.log(id);
+    axios.delete(`item?id=${id}`).then(res => {
+      console.log(res.data, 123);
+      if (res.data?.status === 200) {
+        setItems(res?.data?.data)
+        
+      }
+    })
+   } 
   return (
     <>
       <Box width={"100%"} marginTop="20px">
@@ -288,6 +298,7 @@ export const AddItem = () => {
                   id={e?._id}
                   type="item"
                   isMarkdown={e?.isMarkdown}
+                  handleDelete = {handleDelete}
                 />
               );
             })

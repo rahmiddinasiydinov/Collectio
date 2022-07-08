@@ -57,6 +57,13 @@ export const AddCollection = () => {
   const handleChange = (e) => {
     setFile(e.target.files[0]);
   };
+
+  const handleDelete=(id)=>{
+        axios.delete(`collection?id=${id}`).then((res) => {
+          console.log(res.data);
+          setCollections(res.data?.data);
+        });
+  }
   return (
     <>
       <Box width={"100%"} marginTop="20px">
@@ -220,6 +227,7 @@ export const AddCollection = () => {
                   name={e?.name}
                   id={e?._id}
                   isMarkdown={e?.isMarkdown}
+                  handleDelete = {handleDelete}
                 />
               );
             })

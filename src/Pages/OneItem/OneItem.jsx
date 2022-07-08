@@ -8,7 +8,6 @@ import {
   Avatar,
   Button,
   Paper,
-  Input,
   TextField,
 } from "@mui/material";
 import { useParams } from "react-router";
