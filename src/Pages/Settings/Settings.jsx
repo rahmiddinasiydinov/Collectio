@@ -1,4 +1,14 @@
-import { Container, Typography, Box, FormControl, MenuItem, Select, InputLabel, Button, Avatar } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  Button,
+  Avatar,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { themeActions } from "../../Redux/theme";
@@ -10,55 +20,58 @@ import { useNavigate } from "react-router";
 import { grey } from "@mui/material/colors";
 
 export const Settings = () => {
-  const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(
+    window.localStorage.getItem("theme") || "light"
+  );
   const [img, setImg] = useState(null);
   const [language, setLanguage] = useState(
     JSON.parse(window.localStorage.getItem("language")) || "uz"
   );
-  const user = useSelector(state=>state?.user?.user)
+  const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const handleTheme = (e) => {
     console.log(e.target.value);
-    window.localStorage.setItem('theme', e.target.value);
+    window.localStorage.setItem("theme", e.target.value);
     dispatch(themeActions.setTheme(e.target.value));
-    setTheme(e.target.value)
-  }
+    setTheme(e.target.value);
+  };
   const handleLanguage = (e) => {
-    i18n.changeLanguage(e.target.value)
-    window.localStorage.setItem('language',JSON.stringify(e.target.value));
+    i18n.changeLanguage(e.target.value);
+    window.localStorage.setItem("language", JSON.stringify(e.target.value));
     setLanguage(e.target.value);
-  }
+  };
   const handleLogout = () => {
     if (user) {
       axios.get("logout").then((res) => console.log(res));
       dispatch(userActions.setUser(null));
       window.localStorage.removeItem("user");
     } else {
-      navigate('/login')
+      navigate("/login");
     }
-  }
+  };
 
-  const handleImage = async(e) => {
-  const img = e.target.files[0]
-        if (user && img) {
-          const formData = new FormData();
-          formData.append("img", img);
-          axios
-            .post("profile", formData, {
-              headers: {
-                "content-type": "multipart/form-data",
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              if (res.data?.data) {
-                dispatch(userActions.setUser(res.data?.data));
-              }
-            });
-        }
-  }
+  const handleImage = async (e) => {
+    const img = e.target.files[0];
+    if (user && img) {
+      const formData = new FormData();
+      formData.append("img", img);
+      axios
+        .post("profile", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data?.data) {
+            dispatch(userActions.setUser(res.data?.data));
+            window.localStorage.setItem("user", JSON.stringify(res.data?.data));
+          }
+        });
+    }
+  };
   return (
     <>
       <Container maxWidth="xl">

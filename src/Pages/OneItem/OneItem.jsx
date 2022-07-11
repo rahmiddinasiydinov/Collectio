@@ -74,7 +74,7 @@ export const OneItem = () => {
       itemId: item?._id,
       comment: commentValue,
     });
-    socket.emit("new-comment", {
+    socket.emit("new-comment",{
       userId: user?._id,
       itemId: item?._id,
       comment: commentValue,
