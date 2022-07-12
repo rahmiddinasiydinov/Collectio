@@ -19,6 +19,7 @@ import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
 import { Markdown } from "./Markdown";
 import upload from '../Assets/Images/Upload.png'
+import { Loader } from "./Loader";
 export const AddItem = () => {
   const user = useSelector((state) => state.user.user);
   const [file, setFile] = useState("");
@@ -27,6 +28,8 @@ export const AddItem = () => {
   const [collections, setCollections] = useState(null);
   const [markdown, setMarkdown] = useState('');
   const [isMarkdown, setIsMarkdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("Please wait");
   const { t } = useTranslation();
   const config = {
     headers: {
@@ -56,8 +59,11 @@ export const AddItem = () => {
         setCollections(res?.data?.data);
       });
   }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    setLoadingText("Creating new item");
     const { name, tag, desc, collection } = e.target.elements;
     console.log(name.value, tag.value, desc.value, collection.value);
     const formData = new FormData();
@@ -71,6 +77,10 @@ export const AddItem = () => {
     axios.post("item", formData, config).then((res) => {
       console.log(res);
       setItems([...res.data?.data?.items]);
+      setLoadingText("Created successfully!");
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000)
     });
   };
   const handleChange = (e) => {
@@ -78,16 +88,23 @@ export const AddItem = () => {
   };
   const handleDelete = (id) => {
     console.log(id);
+      setLoading(true);
+      setLoadingText("Deleting is in progress");
     axios.delete(`item?id=${id}`).then(res => {
       console.log(res.data, 123);
       if (res.data?.status === 200) {
-        setItems(res?.data?.data)
+        setItems(res?.data?.data);
+        setLoadingText("Deleted successfully!");
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         
       }
     })
    } 
   return (
     <>
+      <Loader isLoading={loading} text={ loadingText} />
       <Box width={"100%"} marginTop="20px">
         <Typography
           marginTop={"50px"}

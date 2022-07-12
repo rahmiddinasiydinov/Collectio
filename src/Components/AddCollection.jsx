@@ -6,8 +6,8 @@ import {
   Button,
   List,
   FormGroup,
-  FormControlLabel, 
-  Checkbox
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -15,29 +15,31 @@ import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
 import { Markdown } from "./Markdown";
-import upload from '../Assets/Images/Upload.png'
-
+import upload from "../Assets/Images/Upload.png";
+import { Loader } from "./Loader";
 export const AddCollection = () => {
   const { t } = useTranslation();
   const user = useSelector((state) => state.user.user);
   const [file, setFile] = useState("");
   const [collections, setCollections] = useState(null);
-  const [markdown, setMarkdown] = useState('');
+  const [markdown, setMarkdown] = useState("");
   const [isMarkdown, setIsMarkdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("Please wait");
   const config = {
     headers: {
       "content-type": "multipart/form-data",
     },
   };
   useEffect(() => {
-    axios
-      .get(`my_collections?id=${user?._id}`)
-      .then((res) => {
-        setCollections(res.data?.data);
-      });
+    axios.get(`my_collections?id=${user?._id}`).then((res) => {
+      setCollections(res.data?.data);
+    });
   }, [user]);
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    setLoadingText("Creating new collection");
     const { name, topic, desc } = e.target.elements;
     console.log(name.value, topic, desc);
     const formData = new FormData();
@@ -47,25 +49,34 @@ export const AddCollection = () => {
     formData.append("userId", user?._id);
     formData.append("topic", topic.value);
     formData.append("isMarkdown", isMarkdown);
-    axios
-      .post("collection", formData, config)
-      .then((res) => {
-        console.log(res.data.data?.collections);
-        setCollections([...res.data?.data?.collections]);
-      });
+    axios.post("collection", formData, config).then((res) => {
+      console.log(res.data.data?.collections);
+      setCollections([...res.data?.data?.collections]);
+      setLoadingText("Created successfully!");
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    });
   };
   const handleChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleDelete=(id)=>{
-        axios.delete(`collection?id=${id}`).then((res) => {
-          console.log(res.data);
-          setCollections(res.data?.data);
-        });
-  }
+  const handleDelete = (id) => {
+    setLoading(true);
+    setLoadingText("Deleting is in progress");
+    axios.delete(`collection?id=${id}`).then((res) => {
+      console.log(res.data);
+      setCollections(res.data?.data);
+      setLoadingText("Deleted successfully!");
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    });
+  };
   return (
     <>
+      <Loader isLoading={loading} text={loadingText} />
       <Box width={"100%"} marginTop="20px">
         <Typography
           marginTop={"50px"}
