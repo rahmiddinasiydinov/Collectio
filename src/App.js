@@ -19,7 +19,7 @@ import { SocketProvider } from "./Contexts/SocketIo";
 import Admin from "./Pages/Admin/Admin";
 function App() {
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://localhost:7007/";
+  axios.defaults.baseURL = "https://collectios.herokuapp.com/";
   const themeType = useSelector(state => state.theme.currentTheme);
   return (
     <ThemeProvider theme={themeType === "light" ? theme : themeDark}>
