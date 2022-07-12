@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
 import { Markdown } from "./Markdown";
-
+import upload from '../Assets/Images/Upload.png'
 
 export const AddCollection = () => {
   const { t } = useTranslation();
@@ -97,7 +97,7 @@ export const AddCollection = () => {
               flexWrap: "wrap",
             }}
           >
-            <Box>
+            <Box sx={{ width: "500px", maxWidth: "100%" }}>
               {" "}
               <TextField
                 className="add__input"
@@ -125,6 +125,14 @@ export const AddCollection = () => {
                 required
                 sx={{ width: "100%", marginTop: "20px" }}
               />
+              <Box marginTop={"30px"}>
+                <img
+                  width={"100%"}
+                  className="upload-img"
+                  src={file ? URL.createObjectURL(file) : upload}
+                  alt="upload img"
+                />
+              </Box>
               <Button
                 variant="contained"
                 sx={{
@@ -180,8 +188,18 @@ export const AddCollection = () => {
                   setMarkdown(e.target.value);
                 }}
               />
-              <Typography sx={{ display: isMarkdown?"block":'none', marginTop: '10px', padding: '10px', border: "1px solid #999999", borderRadius: '5px', width: "100%", maxWidth: "100%" }}>
-             <Markdown text={markdown} />
+              <Typography
+                sx={{
+                  display: isMarkdown ? "block" : "none",
+                  marginTop: "10px",
+                  padding: "10px",
+                  border: "1px solid #999999",
+                  borderRadius: "5px",
+                  width: "100%",
+                  maxWidth: "100%",
+                }}
+              >
+                <Markdown text={markdown} />
               </Typography>
               <Button
                 type="submit"
@@ -227,7 +245,7 @@ export const AddCollection = () => {
                   name={e?.name}
                   id={e?._id}
                   isMarkdown={e?.isMarkdown}
-                  handleDelete = {handleDelete}
+                  handleDelete={handleDelete}
                 />
               );
             })

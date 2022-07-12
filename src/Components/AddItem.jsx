@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { CardCollection } from "./CardCollection";
 import { useTranslation } from "react-i18next";
 import { Markdown } from "./Markdown";
-
+import upload from '../Assets/Images/Upload.png'
 export const AddItem = () => {
   const user = useSelector((state) => state.user.user);
   const [file, setFile] = useState("");
@@ -119,7 +119,7 @@ export const AddItem = () => {
               flexWrap: "wrap",
             }}
           >
-            <Box sx={{ width: "400px", maxWidth: "100%" }}>
+            <Box sx={{ width: "500px", maxWidth: "100%" }}>
               {" "}
               <TextField
                 className="add__input"
@@ -185,6 +185,14 @@ export const AddItem = () => {
                     })}
                 </Select>
               </FormControl>
+              <Box marginTop={"30px"}>
+                <img
+                  width={"100%"}
+                  className="upload-img"
+                  src={file ? URL.createObjectURL(file) : upload}
+                  alt="upload img"
+                />
+              </Box>
               <Button
                 variant="contained"
                 sx={{
@@ -235,7 +243,7 @@ export const AddItem = () => {
                 label={t("Description")}
                 multiline
                 onChange={(e) => {
-                  setMarkdown(e.target.value)
+                  setMarkdown(e.target.value);
                 }}
                 sx={{ width: "100%", maxWidth: "100%" }}
                 name="desc"
@@ -298,7 +306,7 @@ export const AddItem = () => {
                   id={e?._id}
                   type="item"
                   isMarkdown={e?.isMarkdown}
-                  handleDelete = {handleDelete}
+                  handleDelete={handleDelete}
                 />
               );
             })

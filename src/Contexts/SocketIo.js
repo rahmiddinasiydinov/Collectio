@@ -6,7 +6,7 @@ export const socketContext = createContext();
 
 
 export const SocketProvider = ({children}) => {
-    const socket = io("https://collectios.herokuapp.com/");
+    const socket = io("http://localhost:7007/");
     return (
         <socketContext.Provider value={socket}>
             { children}
